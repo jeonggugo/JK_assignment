@@ -1,4 +1,4 @@
-#KT_Cloud_TECH UP 성장 과정! 
+# KT_Cloud_TECH UP 성장 과정! 
 정리한 내용과 계속해서 배운점을 업로드 할 예정!
 
 ## KT_Cloud_TECH UP 2일차 과정
