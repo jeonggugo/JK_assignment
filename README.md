@@ -3,6 +3,10 @@
 
 ## 그냥 모르는 내용 아니면 미흡한 내용 정리!
 
+### CS 관련 
+1. 스레드, JVM ,GC
+https://www.notion.so/JVM-32f4013472e3803c8780f089a44bb39f?source=copy_link
+
 ### JAVA 문법
 https://www.notion.so/Java-326d643f22f480ad896cd0c679d3d440?source=copy_link
 
