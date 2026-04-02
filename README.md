@@ -56,3 +56,7 @@ https://www.notion.so/KT-Cloud-TECH-UP-10-3334013472e380dbb4caf68810a83f4f?sourc
 ## KT_Cloud_TECH UP 11일차 과정
 
 https://www.notion.so/TCP-IP-3334013472e38059b006d98911372213?source=copy_link
+
+## KT_Cloud_TECH UP 12일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-12-3364013472e380159415e27036fecfe2?source=copy_link
