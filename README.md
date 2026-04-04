@@ -12,6 +12,9 @@ https://www.notion.so/Java-326d643f22f480ad896cd0c679d3d440?source=copy_link
 
 ### Spring 공부
 https://www.notion.so/Spring-327d643f22f48058b30dddf41ffdbeb9?source=copy_link
+
+### 블로그 주소 모음
+https://www.notion.so/3384013472e3805aab41c0c2a1bf5b72?source=copy_link
 ---
 
 ## KT_Cloud_TECH UP 1일차(OT) 과정
