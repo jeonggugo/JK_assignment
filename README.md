@@ -63,3 +63,11 @@ https://www.notion.so/TCP-IP-3334013472e38059b006d98911372213?source=copy_link
 ## KT_Cloud_TECH UP 12일차 과정
 
 https://www.notion.so/KT-Cloud-TECH-UP-12-3364013472e380159415e27036fecfe2?source=copy_link
+
+## KT_Cloud_TECH UP 13일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-13-3374013472e380fab0d8c32a11492883?source=copy_link
+
+## KT_Cloud_TECH UP 14일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-14-3394013472e38017a97cdb97075a2c03?source=copy_link
