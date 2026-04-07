@@ -71,3 +71,11 @@ https://www.notion.so/KT-Cloud-TECH-UP-13-3374013472e380fab0d8c32a11492883?sourc
 ## KT_Cloud_TECH UP 14일차 과정
 
 https://www.notion.so/KT-Cloud-TECH-UP-14-3394013472e38017a97cdb97075a2c03?source=copy_link
+
+## KT_Cloud_TECH UP 15일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-15-33b4013472e380a2b76ce239a254381b?source=copy_link
+
+## KT_Cloud_TECH UP 16일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-16-33b4013472e3807a8cdccabb73f0fefe?source=copy_link
