@@ -12,6 +12,9 @@ https://www.notion.so/Java-326d643f22f480ad896cd0c679d3d440?source=copy_link
 
 ### Spring 공부
 https://www.notion.so/Spring-327d643f22f48058b30dddf41ffdbeb9?source=copy_link
+
+### 블로그 주소 모음
+https://www.notion.so/3384013472e3805aab41c0c2a1bf5b72?source=copy_link
 ---
 
 ## KT_Cloud_TECH UP 1일차(OT) 과정
@@ -60,3 +63,23 @@ https://www.notion.so/TCP-IP-3334013472e38059b006d98911372213?source=copy_link
 ## KT_Cloud_TECH UP 12일차 과정
 
 https://www.notion.so/KT-Cloud-TECH-UP-12-3364013472e380159415e27036fecfe2?source=copy_link
+
+## KT_Cloud_TECH UP 13일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-13-3374013472e380fab0d8c32a11492883?source=copy_link
+
+## KT_Cloud_TECH UP 14일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-14-3394013472e38017a97cdb97075a2c03?source=copy_link
+
+## KT_Cloud_TECH UP 15일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-15-33b4013472e380a2b76ce239a254381b?source=copy_link
+
+## KT_Cloud_TECH UP 16일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-16-33b4013472e3807a8cdccabb73f0fefe?source=copy_link
+
+## KT_Cloud_TECH UP 17일차 과정
+
+https://www.notion.so/KT-Cloud-TECH-UP-17-33c4013472e3803c93bdd2002ac8f328?source=copy_link
