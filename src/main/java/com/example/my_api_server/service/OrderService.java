@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.IntStream;
 
-//과제 참고해서 과제하기!
+//과제 참고해서 과제하기! 배포테스트 오류 Rerun
 @Service
 @RequiredArgsConstructor
 @Slf4j
