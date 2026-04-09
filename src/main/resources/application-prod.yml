@@ -19,7 +19,7 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgresSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: false
