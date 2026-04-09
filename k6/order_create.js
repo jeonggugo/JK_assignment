@@ -3,7 +3,7 @@ import { check, sleep } from 'k6';
 
 export const options = {
   // 테스트 설정 (예: 10명이 30초 동안 반복 네트워크(HTTP/웹소켓) 호출 )
-  vus: 1000, //가상 유저수
+  vus: 2000, //가상 유저수
   duration: '30s', //테스트할 총 시간
   thresholds: { //SLA(Service Level Agreement) 준수: 서비스가 보장해야 하는 최소한의 속도를 강제할 수 있음
       // 1. 응답 시간 기준: 95%의 요청이 500ms(0.5초) 이내여야 함

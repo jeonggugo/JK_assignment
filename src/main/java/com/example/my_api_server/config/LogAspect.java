@@ -12,13 +12,11 @@ import org.springframework.stereotype.Component;
 public class LogAspect {
     //메서드 실행하면 시간을 찍어보려함.
     @Around("execution(* com.example.my_api_server.service..*(..))")
-    public Object logging(ProceedingJoinPoint joinPoint) {
+    public Object logging(ProceedingJoinPoint joinPoint) throws Throwable {
 
         long startTime = System.currentTimeMillis();
         try {
             return joinPoint.proceed();
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
         } finally {
             long endTime = System.currentTimeMillis();
             log.info(joinPoint.getSignature() + " 실행시간: " + (endTime - startTime) + "ms");

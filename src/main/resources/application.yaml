@@ -1,0 +1,8 @@
+server:
+  port: 8080 #서버 포트를 8080으로 지정한다.
+
+spring:
+  application:
+    name: my_api
+  profiles: #기본 프로파일 설정
+    default: dev   #아래 application-dev.yml폴더를 가지고 설정하겠다.

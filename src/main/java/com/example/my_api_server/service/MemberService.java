@@ -1,5 +1,5 @@
 package com.example.my_api_server.service;
-//실제 빚3ㅡ니스 로직이 구성됨
+//실제 비즈니스 로직이 구성됨
 
 import com.example.my_api_server.entity.Member;
 import com.example.my_api_server.repo.MemberRepo;

@@ -8,14 +8,14 @@ import java.util.List;
 
 @Getter
 @Slf4j
-public class Counter {
+public class SyncCounter {
 
     private int count = 0; //해당 공유 영역 값(Heap)을 동시에 수정
 
     public static void main(String[] args) {
         List<Thread> threads = new ArrayList<>();
-        int threadCount = 30000;//유저수라고 생각하면 됨.
-        Counter counter = new Counter();
+        int threadCount = 5;//유저수라고 생각하면 됨.
+        SyncCounter counter = new SyncCounter();
 
         //스레드 생성
         for (int i = 0; i < threadCount; i++) {
@@ -36,8 +36,18 @@ public class Counter {
         log.info("실제값 : {}", counter.count);
     }
 
-    private void increaseCount() {
-        count++;
+    //메서드 단위의 sync 메서드 실행자체에 대해서 락을 얻어서 순서를 제어합니다.
+
+    private synchronized void increaseCount() {
+        //스레드 N번이 들어오면서 락을 흭득합니다.
+        Thread.State state = Thread.currentThread().getState();
+        log.info("state1 = {}", state.toString());
+//        synchronized (this) { //락으로 순서를 제어하겠다.
+//            log.info("state2(락을 얻는부분) = {}", state.toString());
+//            count++;
+//        }
+        //스레드 N번이 나가면서 락을 반환합니다.
+        log.info("state3 = {}", state.toString());
     }
 
 }
