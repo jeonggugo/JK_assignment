@@ -34,10 +34,17 @@ public class MemberDBService {
                 .password(password)
                 .build();
 
+        //동기는 작업이 완료될 때까지 기다린다!
+        //비동기는 작업이 완료될 때까지 기다리지 않는다! -> 작업중에도 다른 작업을 처리함
+
         //저장
+
+        //동기 블로킹
+        //i/o발생한다고 가정 해당 스레드는 잠을자게됨(Blocking)
         Member savedMember = memberDBRepo.save(member);
 
         //변경지점이 되게 작아지게되는 유지보수성 Up(강결합 해결)
+        //비동기, 논블로킹
         publisher.publishEvent(new MemberSignUpEvent(savedMember.getId(), savedMember.getEmail()));//이벤트 발송
 
 //        sendNotification(); //알림이 대기하는 시간을 1분 이상이라고하면...

@@ -105,7 +105,7 @@ class OrderServiceUnitTest {
         when(productRepo.findAllById(initData.productIds)).thenReturn(List.of(initData.product1, initData.product2));
         when(memberDBRepo.findById(initData.memberId)).thenReturn(Optional.of(initData.member));
         when(orderRepo.save(any())).thenAnswer(invocation ->
-                invocation.getArgument(0));
+                invocation.getArgument(1));
         //when
         OrderResponseDto dto = orderService.createOrder(orderCreateDto, LocalDateTime.now());
 
@@ -178,6 +178,53 @@ class OrderServiceUnitTest {
         //then (값 검증)
         assertThat(dto).isNotNull();
 
+
+    }
+
+
+    @Test
+    @DisplayName("주문 생성 시 상품 개수 조회 테스트 작성")
+    public void OrderStockServiceTest() {
+        //given
+        Long memberId = 1L;//멤버 1번
+        List<Long> productIds = List.of(1L, 2L);//주문할 상품 리스트
+        List<Long> counts = List.of(10L, 20L);//각 주문할 상품의 개수
+        Product product1 = Product.builder()
+                .productNumber("TEST1")
+                .productName("티셔츠 1")
+                .productType(ProductType.CLOTHES)
+                .price(1000L)
+                .stock(15L)
+                .build();
+
+        Product product2 = Product.builder()
+                .productNumber("TEST2")
+                .productName("티셔츠 2")
+                .productType(ProductType.CLOTHES)
+                .price(2000L)
+                .stock(20L)
+                .build();
+        Member member = Member.builder()
+                .email("StockTest@gmail.com")
+                .password("1234")
+                .build();
+        OrderCreateDto createDto = new OrderCreateDto(memberId, productIds, counts);//상품 주문
+
+        //when
+        //Repo에 가서 위에서 작성한 1, 2번을 찾고, 그 내용이 담긴 리스트를 리턴받음
+        when(productRepo.findAllById(productIds)).thenReturn(List.of(product1, product2));
+        when(memberDBRepo.findById(memberId)).thenReturn(Optional.of(member));
+        //
+        when(orderRepo.save(any())).thenAnswer(invocation ->
+                invocation.getArgument(0));
+        OrderResponseDto dto = orderService.createOrder(createDto, LocalDateTime.now());
+        //then
+
+        assertThat(dto.isSuccess()).isTrue(); // 주문이 성공했는지 확인
+        assertThat(dto.getOrderStatus()).isEqualTo(OrderStatus.COMPLETED); // 상태 확인
+        System.out.println("주문이 처리된 시간: " + dto.getOrderCompletedTime());
+        System.out.println(product1.getProductName() + "의 재고: " + product1.getStock());
+        System.out.println(product2.getProductName() + "의 재고: " + product2.getStock());
 
     }
     //테스트용 초기 데이터

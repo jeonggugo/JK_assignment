@@ -14,7 +14,7 @@ public class Counter {
 
     public static void main(String[] args) {
         List<Thread> threads = new ArrayList<>();
-        int threadCount = 5;//유저수라고 생각하면 됨.
+        int threadCount = 20000;//유저수라고 생각하면 됨.
         Counter counter = new Counter();
 
         //스레드 생성
