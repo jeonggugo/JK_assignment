@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +40,11 @@ public class Order {
     @Column(nullable = false)
     private LocalDateTime orderTime;//주문 시간
 
-    public static Order createOrder(Member member, LocalDateTime orderTime) {
+    public static Order createOrder(Member member, Clock clock) {
         Order order = Order.builder()
                 .Buyer(member)
                 .orderStatus(OrderStatus.PENDING)
-                .orderTime(orderTime)
+                .orderTime(LocalDateTime.now(clock))
                 .build();
 
 

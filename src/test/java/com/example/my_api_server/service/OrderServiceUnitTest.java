@@ -15,7 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +41,9 @@ class OrderServiceUnitTest {
 
     @Mock//가짜 객체 생성
     OrderRepo orderRepo;
+
+    @Mock
+    Clock clock;
 
     @InjectMocks// 실제 테스트 할 대상 클래스(Mock 객체를 자동으로 주입받는다.)
     OrderService orderService;
@@ -107,7 +112,7 @@ class OrderServiceUnitTest {
         when(orderRepo.save(any())).thenAnswer(invocation ->
                 invocation.getArgument(1));
         //when
-        OrderResponseDto dto = orderService.createOrder(orderCreateDto, LocalDateTime.now());
+        OrderResponseDto dto = orderService.createOrder(orderCreateDto);
 
         //then (값 검증)
         ArgumentCaptor<Order> capture = ArgumentCaptor.forClass(Order.class);
@@ -126,7 +131,7 @@ class OrderServiceUnitTest {
         //공통적으로 데이터를 사용하지 않는 케이스(재고 관련해서 조금 수정필요하다.)
         Long memberId = 1L;
         List<Long> productIds = List.of(1L, 2L);
-        List<Long> counts = List.of(10L, 20L);
+        List<Long> counts = List.of(1L, 1L);
 
         Product product1 = Product.builder()
                 .productNumber("TEST1")
@@ -155,7 +160,7 @@ class OrderServiceUnitTest {
         when(productRepo.findAllById(productIds)).thenReturn(List.of(product1, product2));
         when(memberDBRepo.findById(memberId)).thenReturn(Optional.of(member));
         //then (값 검증)
-        assertThatThrownBy(() -> orderService.createOrder(createDto, LocalDateTime.now()))
+        assertThatThrownBy(() -> orderService.createOrder(createDto))
                 .isInstanceOf(RuntimeException.class)//해당 예외 클레스가 어떤건지 지정합니다.
                 .hasMessage("재고가 음수이니 주문 할 수 없습니다!");//해당 예외 메시지가 어떤건지 지정
 
@@ -173,7 +178,7 @@ class OrderServiceUnitTest {
 
         //when(테스트 할 메서드)
         //테스트가 시간여부에 따라 달라짐 -> 과연 좋을까?
-        OrderResponseDto dto = orderService.createOrder(orderCreateDto, LocalDateTime.now());
+        OrderResponseDto dto = orderService.createOrder(orderCreateDto);
 
         //then (값 검증)
         assertThat(dto).isNotNull();
@@ -217,15 +222,79 @@ class OrderServiceUnitTest {
         //
         when(orderRepo.save(any())).thenAnswer(invocation ->
                 invocation.getArgument(0));
-        OrderResponseDto dto = orderService.createOrder(createDto, LocalDateTime.now());
+        OrderResponseDto dto = orderService.createOrder(createDto);
         //then
 
         assertThat(dto.isSuccess()).isTrue(); // 주문이 성공했는지 확인
         assertThat(dto.getOrderStatus()).isEqualTo(OrderStatus.COMPLETED); // 상태 확인
+
         System.out.println("주문이 처리된 시간: " + dto.getOrderCompletedTime());
         System.out.println(product1.getProductName() + "의 재고: " + product1.getStock());
         System.out.println(product2.getProductName() + "의 재고: " + product2.getStock());
 
+    }
+
+    @Test
+    @DisplayName("주문 시 상품이 존재하지 않으면 예외가 발생한다.")
+    public void validateItemWhenCreateOrder() {
+        //given
+        Long memberId = 1L;
+        List<Long> productIds = List.of(1L, 2L);
+        List<Long> counts = List.of(10L, 1L);
+        Product product1 = Product.builder()
+                .productNumber("TEST1")
+                .productName("티셔츠 1")
+                .productType(ProductType.CLOTHES)
+                .price(1000L)
+                .stock(15L)
+                .build();
+
+        Product product2 = Product.builder()
+                .productNumber("TEST2")
+                .productName("티셔츠 2")
+                .productType(ProductType.CLOTHES)
+                .price(2000L)
+                .stock(20L)
+                .build();
+        Member member = Member.builder()
+                .email("StockTest@gmail.com")
+                .password("1234")
+                .build();
+        OrderCreateDto createDto = new OrderCreateDto(memberId, productIds, counts);//상품 주문
+
+
+        //when
+        when(productRepo.findAllById(productIds)).thenReturn(List.of());
+        when(memberDBRepo.findById(memberId)).thenReturn(Optional.of(member));
+        //then
+        assertThatThrownBy(() -> orderService.createOrder(createDto))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("해당 상품을 찾을 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("[Exception]주문 시간 날짜 오류 테스트 개선")
+    public void orderTimeException2() {
+        // given
+        Clock fixedClock = Clock.fixed(
+                LocalDateTime.of(2026, 4, 13, 13, 0, 0)
+                        .toInstant(ZoneOffset.UTC),
+                ZoneOffset.UTC
+        );
+        //지금 몇시인지?
+        when(clock.instant()).thenReturn(fixedClock.instant());
+        when(clock.getZone()).thenReturn(fixedClock.getZone());
+
+        when(productRepo.findAllById(initData.productIds)).thenReturn(List.of(initData.product1, initData.product2));
+        when(memberDBRepo.findById(initData.memberId)).thenReturn(Optional.of(initData.member));
+        when(orderRepo.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // when
+        OrderResponseDto dto = orderService.createOrder(orderCreateDto);
+
+        // then
+        assertThat(dto).isNotNull();
+        assertThat(dto.getOrderCompletedTime().getHour()).isEqualTo(13); // 1시 검증!
     }
     //테스트용 초기 데이터
 

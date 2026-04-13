@@ -22,7 +22,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -126,7 +125,7 @@ public class OrderServiceIntegrationTest {
             OrderCreateDto createDto = new OrderCreateDto(savedMember.getId(), productIds, counts);
 
             //when
-            OrderResponseDto retDto = orderService.createOrder(createDto, LocalDateTime.now());
+            OrderResponseDto retDto = orderService.createOrder(createDto);
 
             //then
             Assertions.assertThat(retDto.getOrderCompletedTime()).isNotNull();
@@ -148,7 +147,7 @@ public class OrderServiceIntegrationTest {
             //DB와 통신하지 않게 proxy처럼 임의로 실행을 시켜줘야함!
             OrderCreateDto createDto = new OrderCreateDto(savedMember.getId(), productIds, counts);
             //when
-            OrderResponseDto retDto = orderService.createOrder(createDto, LocalDateTime.now());
+            OrderResponseDto retDto = orderService.createOrder(createDto);
             //then
             List<Product> resultProducts = productRepo.findAllById(productIds);
             //현재 재고(product 생성 시점) - 주문 재고(요청량) = 최신재고(결과값이 반영된 재고)
@@ -181,7 +180,7 @@ public class OrderServiceIntegrationTest {
             OrderCreateDto createDto = new OrderCreateDto(savedMember.getId(), productIds, counts);
             //when
             //then
-            assertThatThrownBy(() -> orderService.createOrder(createDto, LocalDateTime.now()))
+            assertThatThrownBy(() -> orderService.createOrder(createDto))
                     .isInstanceOf(RuntimeException.class)
                     .hasMessage("재고가 음수이니 주문 할 수 없습니다!");
 
@@ -197,16 +196,16 @@ public class OrderServiceIntegrationTest {
         public void validateMemberWhenCreateOrder() {
             //given
             List<Long> counts = List.of(1L, 1L);
-            Member savedMember = getSavedMember("1234"); //멤버 저장
+            Member savedMember = getSavedMember("12354"); //멤버 저장
             List<Product> products = getProducts(); //상품 저장
             List<Long> productIds = getProductIds(products); //productId 추출 작업
 
-            OrderCreateDto createDto = new OrderCreateDto(1234L, productIds, counts);
+            OrderCreateDto createDto = new OrderCreateDto(123422L, productIds, counts);
 
             //when
 
             //then
-            assertThatThrownBy(() -> orderService.createOrder(createDto, LocalDateTime.now()))
+            assertThatThrownBy(() -> orderService.createOrder(createDto))
                     .isInstanceOf(RuntimeException.class)
                     .hasMessage("회원이 존재하지 않습니다.");
         }

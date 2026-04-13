@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -26,10 +27,11 @@ public class OrderService {
     private final OrderRepo orderRepo;
     private final MemberDBRepo memberRepo;
     private final ProductRepo productRepo;
+    private final Clock clock;
 
     //주문 생성
     @Transactional//악의적인 사용자가 1만개씩 구매한다고 하였을 때, api가 1만번씩 돌면 ...
-    public OrderResponseDto createOrder(OrderCreateDto dto, LocalDateTime orderTime) {
+    public OrderResponseDto createOrder(OrderCreateDto dto) {
         Member member = memberRepo.findById(dto.memberId())
                 .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
 
@@ -52,8 +54,13 @@ public class OrderService {
 //        List<Product> products = dto.productId().stream()
 //                .map((pId) -> productRepo.findById(pId).orElseThrow())
 //                .toList(); //
-        Order order = Order.createOrder(member, orderTime);
+        Order order = Order.createOrder(member, clock);
         List<Product> products = productRepo.findAllById(dto.productId());//IN 쿼리
+        //해당하는 상품 주문요청을 받았을 때, 해당 상품이 존재하지 않으면 오류메시지를 출력한다.
+        if (products.isEmpty()) {
+            throw new RuntimeException("해당 상품을 찾을 수 없습니다.");
+        }
+
         List<OrderProduct> orderProducts = IntStream.range(0, dto.count().size())
                 .mapToObj(idx -> {
                     //재고차감 현재 음수처리 안됨
